@@ -1,4 +1,5 @@
 // ux/hooks/useInfiniteScroll.ts
+"use client"
 import { useState, useEffect, useRef } from 'react';
 
 interface InfiniteScrollProps {

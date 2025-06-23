@@ -4,7 +4,6 @@ import CardPerfilTypes from "@/components/ui/cardPerfil";
 import DivBlur from "@/components/widgets/blur";
 import Hero from "@/components/ui/hero";
 import DivCardAnimado from "@/components/widgets/divCardAnimado";
-import { Rocket } from "lucide-react";
 
 export default function Home() {
   return (
