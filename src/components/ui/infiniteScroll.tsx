@@ -28,9 +28,9 @@ const imageData = [
 ];
 
 const InfiniteImageScroll: React.FC = () => {
-  const { scrollRef, isPaused, setIsPaused } = useInfiniteScroll({
+  // Removido isPaused da desestruturação, já que não é usado diretamente
+  const { scrollRef, setIsPaused } = useInfiniteScroll({
     speed: 1,
-    pauseOnHover: true,
   });
 
   // Duplicar imagens para garantir continuidade
