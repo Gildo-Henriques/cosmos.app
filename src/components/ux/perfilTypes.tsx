@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Brain, Rocket, Link, Circle } from 'lucide-react';
 
 // Definindo a interface para as props

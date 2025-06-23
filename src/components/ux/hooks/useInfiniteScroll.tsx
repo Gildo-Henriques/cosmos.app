@@ -1,6 +1,6 @@
-// ux/hooks/useInfiniteScroll.ts
-"use client"
-import { useState, useEffect, useRef } from 'react';
+"use client";
+import * as React from "react"; // Importação explícita do React
+import { useState, useEffect, useRef } from "react";
 
 interface InfiniteScrollProps {
   speed?: number; // Velocidade da animação (pixels por frame)
@@ -13,8 +13,12 @@ interface InfiniteScrollReturn {
   setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function useInfiniteScroll({ speed = 1, pauseOnHover = true }: InfiniteScrollProps = {}): InfiniteScrollReturn {
+export function useInfiniteScroll({
+  speed = 1,
+  pauseOnHover = true,
+}: InfiniteScrollProps = {}): InfiniteScrollReturn {
   const [isPaused, setIsPaused] = useState(false);
+  // Corrige a inicialização do scrollRef com tipagem direta no useRef
   const scrollRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const singleSetWidthRef = useRef<number>(0);
@@ -26,7 +30,8 @@ export function useInfiniteScroll({ speed = 1, pauseOnHover = true }: InfiniteSc
     // Calcular a largura total de uma única cópia dos elementos
     const children = Array.from(scrollElement.children);
     singleSetWidthRef.current = children.reduce(
-      (acc, child) => acc + (child instanceof HTMLElement ? child.offsetWidth + 16 : 0),
+      (acc, child) =>
+        acc + (child instanceof HTMLElement ? child.offsetWidth + 16 : 0),
       0
     ); // 16px = margem
 
@@ -45,7 +50,7 @@ export function useInfiniteScroll({ speed = 1, pauseOnHover = true }: InfiniteSc
         currentPosition += singleSetWidthRef.current;
       }
 
-      // Verificar novamente se scrollElement existe antes de aplicar a transformação
+      // Aplicar a transformação apenas se scrollElement existir
       if (scrollElement) {
         scrollElement.style.transform = `translateX(${currentPosition}px)`;
       }
