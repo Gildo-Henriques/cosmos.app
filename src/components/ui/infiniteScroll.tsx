@@ -1,9 +1,9 @@
-// src/components/ui/infiniteScroll.tsx
 "use client";
 import React from "react";
 import Image from "next/image";
 import { useInfiniteScroll } from "../ux/hooks/useInfiniteScroll";
 
+// Lista de imagens com títulos e textos
 const imageData = [
   {
     src: "/images/slideInfinito/talento.jpg",
@@ -28,10 +28,13 @@ const imageData = [
 ];
 
 const InfiniteImageScroll: React.FC = () => {
+  // Corrige a chamada do useInfiniteScroll (provavelmente linha 37)
   const { scrollRef, setIsPaused } = useInfiniteScroll({ speed: 1 });
 
+  // Duplicar imagens para garantir continuidade
   const duplicatedImageData = [...imageData, ...imageData];
 
+  // Pré-carregamento das imagens
   React.useEffect(() => {
     imageData.forEach((item) => {
       const img = new Image();
@@ -43,7 +46,7 @@ const InfiniteImageScroll: React.FC = () => {
     <>
       <style jsx>{`
         .scroll-container {
-          overflow: hidden;
+          overflow: relative;
           width: 100%;
           white-space: nowrap;
         }
@@ -51,13 +54,14 @@ const InfiniteImageScroll: React.FC = () => {
           display: inline-flex;
           will-change: transform;
         }
+
         .overlay {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.5);
+          background: rgba(0, 0,0.5); /* Fundo semi-transparente */
           color: white;
           display: flex;
           flex-direction: column;
