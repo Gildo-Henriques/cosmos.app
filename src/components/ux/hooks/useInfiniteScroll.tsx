@@ -1,10 +1,9 @@
 "use client";
-import * as React from "react"; // Importação explícita do React
+import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 
 interface InfiniteScrollProps {
   speed?: number; // Velocidade da animação (pixels por frame)
-  pauseOnHover?: boolean; // Pausar a animação ao passar o mouse
 }
 
 interface InfiniteScrollReturn {
@@ -15,10 +14,8 @@ interface InfiniteScrollReturn {
 
 export function useInfiniteScroll({
   speed = 1,
-  pauseOnHover = true,
 }: InfiniteScrollProps = {}): InfiniteScrollReturn {
   const [isPaused, setIsPaused] = useState(false);
-  // Corrige a inicialização do scrollRef com tipagem direta no useRef
   const scrollRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const singleSetWidthRef = useRef<number>(0);

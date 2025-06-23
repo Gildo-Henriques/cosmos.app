@@ -6,7 +6,6 @@ type Props = {
   icon: 'Brain' | 'Rocket' | 'Link' | 'Circle';
   titulo: string;
   texto: string;
-  extra?: string;
 };
 
 // Mapeamento de nomes de ícones para componentes
@@ -18,7 +17,7 @@ const iconMap: Record<Props['icon'], React.ComponentType<{ className?: string }>
 };
 
 // Renomeei para PascalCase seguindo convenções de componentes React
-export default function PerfilTypes({ icon, titulo, texto, extra }: Props) {
+export default function PerfilTypes({ icon, titulo, texto}: Props) {
   const IconComponent = iconMap[icon] || Circle; // Fallback para Circle
 
   return (
