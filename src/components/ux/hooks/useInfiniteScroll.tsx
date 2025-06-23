@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 
 interface InfiniteScrollProps {
-  speed?: number;
+  speed?: number; // Velocidade da animação (pixels por frame)
 }
 
 interface InfiniteScrollReturn {
@@ -15,7 +15,7 @@ export function useInfiniteScroll({
   speed = 1,
 }: InfiniteScrollProps = {}): InfiniteScrollReturn {
   const [isPaused, setIsPaused] = useState(false);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null!); // ✅ Corrigido aqui
   const animationRef = useRef<number | null>(null);
   const singleSetWidthRef = useRef<number>(0);
 
@@ -28,7 +28,7 @@ export function useInfiniteScroll({
     );
 
     singleSetWidthRef.current = children.reduce(
-      (acc, child) => acc + child.offsetWidth + 16,
+      (acc, child) => acc + child.offsetWidth + 16, // 16px de margem
       0
     );
 
