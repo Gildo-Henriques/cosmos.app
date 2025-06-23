@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useInfiniteScroll } from "../ux/hooks/useInfiniteScroll";
 
@@ -91,7 +91,7 @@ const InfiniteImageScroll: React.FC = () => {
               <Image
                 src={item.src}
                 alt={item.title}
-                width={500} // Adicionei width e height para o componente Image
+                width={500}
                 height={320}
                 className="lg:w-[500px] w-full lg:h-80 h-52 rounded-lg object-cover"
                 loading="lazy"

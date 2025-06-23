@@ -32,7 +32,6 @@ export default function CardPerfilTypes() {
           icon={card.icon}
           titulo={card.titulo}
           texto={card.texto}
-          extra={card.extra}
         />
       ))}
     </div>
