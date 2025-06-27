@@ -1,10 +1,8 @@
 
 "use client";
-import React from "react";
-import NextImage from "next/image"; // ✅ Renomeado para evitar conflito com window.Image
-import { useInfiniteScroll } from "../ux/hooks/useInfiniteScroll";
+import React, { useState, useRef, useEffect } from "react";
+import NextImage from "next/image"; // Renomeado para evitar conflito com window.Image
 
-// Lista de imagens com títulos e textos
 const imageData = [
   {
     src: "/images/slideInfinito/talento.jpg",
@@ -29,18 +27,55 @@ const imageData = [
 ];
 
 const InfiniteImageScroll: React.FC = () => {
-  const { scrollRef, setIsPaused } = useInfiniteScroll({ speed: 1 });
-
-  // Duplicar imagens para garantir continuidade
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const singleSetWidthRef = useRef<number>(0);
   const duplicatedImageData = [...imageData, ...imageData];
 
-  // Pré-carregamento das imagens (usando window.Image para evitar conflito)
-  React.useEffect(() => {
+  useEffect(() => {
     imageData.forEach((item) => {
-      const img = new window.Image();
+      const img = new window.Image(); // Usando o construtor global corretamente
       img.src = item.src;
     });
   }, []);
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
+
+    singleSetWidthRef.current = Array.from(scrollElement.children)
+      .slice(0, imageData.length)
+      .reduce((acc, child) => acc + (child as HTMLElement).offsetWidth + 16, 0);
+
+    let currentPosition = 0;
+    const speed = 1;
+
+    const animate = () => {
+      if (isPaused) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      currentPosition -= speed;
+
+      if (Math.abs(currentPosition) >= singleSetWidthRef.current) {
+        currentPosition += singleSetWidthRef.current;
+      }
+
+      scrollElement.style.transform = `translateX(${currentPosition}px)`;
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused]);
 
   return (
     <>
@@ -81,19 +116,19 @@ const InfiniteImageScroll: React.FC = () => {
           {duplicatedImageData.map((item, index) => (
             <div
               key={`${item.src}-${index}`}
-              className="image-container relative lg:w-[500px] w-[350px] lg:h-[320px] h-52 lg:mr-4 mr-2"
+              className="relative lg:w-[500px] w-[350px] lg:h-[320px] h-52 lg:mr-4 mr-2"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
               <NextImage
                 src={item.src}
                 alt={item.title}
-                width={500}
-                height={320}
                 className="lg:w-[500px] w-full lg:h-80 h-52 rounded-lg object-cover"
                 loading="lazy"
+                width={500}
+                height={320}
               />
-              <div className="overlay absolute flex justify-end py-5 px-5 flex-col bg-gradient-to-b to-[#3a3a3a] text-[#bcbcbc] from-transparent w-[350px] lg:w-full lg:h-full h-52 top-0">
+              <div className="absolute flex justify-end py-5 px-5 flex-col bg-gradient-to-b to-[#3a3a3a] text-[#bcbcbc] from-transparent w-[350px] lg:w-full lg:h-full h-52 top-0">
                 <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
                 <p className="text-sm">{item.text}</p>
               </div>

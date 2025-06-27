@@ -56,7 +56,7 @@ export default function Home() {
         </section>
       </section>
         
-         <DivBlur className="size-[500px] absolute -z-20 blur-3xl rotate-180 top-24 right-[550px] bg-conic from-blue-300 from-5% to-gray-800/30 to-90% rounded-full"/>
+         <DivBlur className="size-[500px] absolute -z-20 blur-3xl rotate-180 top-0 right-0 lg:right-[550px] bg-conic from-blue-300 from-5% to-gray-800/30 to-90% rounded-full"/>
 
       <section className="mt-20 z-20">
         <div className="text-center space-y-3 z-50">

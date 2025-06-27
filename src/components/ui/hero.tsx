@@ -46,7 +46,7 @@ export default function Hero() {
           </Link>
         </div>
       </section>
-      <DivBlur className="size-96 absolute -top-48 blur-3xl left-10 z-20  bg-conic from-blue-300 to-gray-100 to-50% rounded-full" />
+      <DivBlur className="size-96 absolute -top-48 blur-3xl lg:left-10 -left-5 z-20  bg-conic from-blue-300 to-gray-100 to-50% rounded-full" />
       <div className="z-20 relative">
         <InfiniteImageScroll />
       </div>
